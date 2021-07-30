@@ -1,16 +1,44 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  // runs flutter app
-  runApp(MyApp());
-}
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  // build is a method and BuildContext is the argument and special object type
+  var questionIndex = 0;
+
+  void answerQuestion() {
+    questionIndex = questionIndex + 1;
+    print(questionIndex);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    //MaterialApp is a class
+    var questions = [
+      'What\'s your favorite color',
+      'What\'s your favorite animal',
+    ];
     return MaterialApp(
-      home: Text('Hello!'),
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('My First App'),
+        ),
+        body: Column(
+          children: [
+            Text(questions[questionIndex]),
+            ElevatedButton(
+              onPressed: answerQuestion,
+              child: Text('Answer 1'),
+            ),
+            ElevatedButton(
+              onPressed: answerQuestion,
+              child: Text('Answer 2'),
+            ),
+            ElevatedButton(
+              onPressed: answerQuestion,
+              child: Text('Answer 3'),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
