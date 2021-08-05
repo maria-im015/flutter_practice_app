@@ -1,24 +1,20 @@
 import 'package:flutter/material.dart';
 
 class Answer extends StatelessWidget {
-  final Function selectHandler;
-  final String answerText;
-
-  Answer(this.selectHandler, this.answerText); 
+  final VoidCallback selectHandler;
+  final answerText;
+  Answer(this.selectHandler, this.answerText);
+  //const Answer({Key? key,  this.selectHandler, this.answerText}): super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: double.infinity,
+      //width: double.infinity,
+      width: 200,
       child: ElevatedButton(
-        onPressed: selectHandler(),
+        style: ElevatedButton.styleFrom(primary: Colors.blue),
         child: Text(answerText),
-        style: ElevatedButton.styleFrom(
-          primary: Colors.pinkAccent, 
-          onPrimary: Colors.yellow,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(25),)
-        ),
+        onPressed: selectHandler,
       ),
     );
   }
