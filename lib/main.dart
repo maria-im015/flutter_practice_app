@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:my_app/answer.dart';
 
-import 'answer.dart';
-import './question.dart';
+// no longer needed if we're importing quiz file
+// import 'answer.dart';
+// import './question.dart';
+import './quiz.dart';
+import './result.dart';
 
 // academind tutorial code
 
@@ -17,7 +20,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final questions = const [
+  // changed to _questions to prevent changes
+  final _questions = const [
     {
       'questionText': 'What\'s your favorite color?',
       'answers': ['Black', 'Red', 'Green', 'White'],
@@ -33,13 +37,16 @@ class _MyAppState extends State<MyApp> {
   ];
 
   var _questionIndex = 0;
+  var _totalScore = 0;
 
-  void _answerQuestion() {
+  void _answerQuestion(int score) {
+    _totalScore += score;
+
     setState(() {
-      _questionIndex = _questionIndex + 1;
+      _questionIndex += 1;
     });
 
-    if (_questionIndex < questions.length) {
+    if (_questionIndex < _questions.length) {
       print('We have more questions!');
     } else {
       print('No more questions!');
@@ -50,25 +57,15 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          title: Text('My First App'),
-        ),
-        body: _questionIndex < questions.length
-            ? Column(
-                children: [
-                  Question(
-                    questions[_questionIndex]['questionText'].toString(),
-                  ),
-                  ...(questions[_questionIndex]['answers'] as List<String>)
-                      .map((answer) {
-                    return Answer(_answerQuestion, answer);
-                  }).toList()
-                ],
-              )
-            : Center(
-                child: Text('You finished!'),
-              ),
-      ),
+          appBar: AppBar(
+            title: Text('My First App'),
+          ),
+          body: _questionIndex < _questions.length
+              ? Quiz(
+                  answerQuestion: _answerQuestion,
+                  questionIndex: _questionIndex,
+                  questions: _questions)
+              : Result()),
     );
   }
 }
